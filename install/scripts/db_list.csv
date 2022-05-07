@@ -1,0 +1,3 @@
+system,host,username,password,db,
+MYSQL,localhost,root,alchool,mysql,
+PGSQL,localhost,postgres,myPassword,postgres,
