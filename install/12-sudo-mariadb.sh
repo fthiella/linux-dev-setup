@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-pushd
+. ./includes.sh
 
-mysql_username=(`grep mysql_username password | awk '{print $2}'`)
-mysql_password=(`grep mysql_password password | awk '{print $2}'`)
+mysql_username=$(get_pwd mysql_username)
+mysql_password=$(get_pwd mysql_password)
 
 # install MariaDB
 # https://www.systranbox.com/how-to-install-mariadb-on-oracle-linux/
@@ -36,5 +36,3 @@ DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
 -- make changes immediately
 FLUSH PRIVILEGES;
 EOS
-
-popd

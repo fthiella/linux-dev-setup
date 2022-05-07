@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 
-add_crontab() {
-	local cronjob="$1"
-	local croncmd="$2"
-
-	(( crontab -l || : ) | grep -v -F "$croncmd" ; echo "$cronjob $croncmd" ) | crontab -
-
-}
+. ./includes.sh
 
 cp -r scripts ~/
 chmod +x ~/scripts/*.sh

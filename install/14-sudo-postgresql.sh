@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-pushd
+. ./includes.sh
 
-postgres_username=(`grep postgres_username password | awk '{print $2}'`)
-postgres_password=(`grep postgres_password password | awk '{print $2}'`)
+postgres_username=$(get_pwd postgres_username)
+postgres_password=$(get_pwd postgres_password)
+
+postgres_hba=/var/lib/pgsql/14/data/pg_hba.conf
 
 # install Postgresql
 # https://www.postgresql.org/download/linux/redhat/
@@ -16,11 +18,11 @@ dnf install -y postgresql14-server
 systemctl enable postgresql-14
 systemctl start postgresql-14
 
-postgresql-setup --initdb
-
 sudo -u postgres psql -c "ALTER USER $postgres_username PASSWORD '$postgres_password';"
-sed -i '/# TYPE  DATABASE        USER            ADDRESS                 METHOD/a local   all             postgres                                md5' /var/lib/pgsql/14/data/pg_hba.conf
+
+header_string="TYPE  DATABASE        USER            ADDRESS                 METHOD"
+add_string="local   all             postgres                                md5"
+
+sed -i "/# $header_string/a $add_string" $postgres_hba
 
 systemctl restart postgresql-14
-
-popd
