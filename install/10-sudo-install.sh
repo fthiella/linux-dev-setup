@@ -11,6 +11,8 @@ dnf -y install wget
 
 dnf -y module install python39
 dnf -y install python39-pip
+pip3.9 install flask
+pip3.9 install gunicorn
 
 # install perl
 

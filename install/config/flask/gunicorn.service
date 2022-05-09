@@ -1,0 +1,13 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=nginx
+Group=nginx
+WorkingDirectory=/usr/share/nginx/apps/flask/
+
+ExecStart=/usr/local/bin/gunicorn --access-logfile - --workers 3 --bind unix:/usr/share/nginx/apps/flask/application.sock wsgi:app.py
+
+[Install]
+WantedBy=multi-user.target
